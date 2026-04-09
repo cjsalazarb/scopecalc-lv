@@ -25,7 +25,7 @@ Al iniciar sesión:
 ## Estado
 - Fase 1 (MVP): ✅ COMPLETA — P0-01 a P0-13 completadas
 - Fase 2 (Plan Reader): pendiente tareas P1-01, P1-02
-- URL producción: [agregar tras deploy en Vercel]
+- URL producción: https://scopecalc-lv.vercel.app
 - Supabase Project Ref: ryxecsfgibymigirylsc
 
 ## Estructura clave
