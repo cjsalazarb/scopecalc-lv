@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { BomClient } from './bom-client'
+import { ExportButtons } from './export-buttons'
 
 export default async function BomPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -71,6 +72,9 @@ export default async function BomPage({ params }: { params: Promise<{ id: string
         <Link href={`/projects/${id}`} className="text-gray-500 hover:text-gray-300 text-sm">← {project.name}</Link>
         <span className="text-gray-700">/</span>
         <span className="text-gray-300 text-sm font-medium">BOM / RFQ</span>
+      </div>
+      <div className="mb-6">
+        <ExportButtons projectId={id} />
       </div>
       <BomClient
         projectId={id}
