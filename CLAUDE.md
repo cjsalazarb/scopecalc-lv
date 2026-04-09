@@ -23,10 +23,10 @@ Al iniciar sesión:
 6. Commit con mensaje indicado
 
 ## Estado
-- Fase 1 (MVP): EN PROGRESO — P0-01 completo
-- Fase 2 (Plan Reader): pendiente tareas P1
-- URL producción: [agregar tras deploy]
-- Supabase Project Ref: [agregar]
+- Fase 1 (MVP): ✅ COMPLETA — P0-01 a P0-13 completadas
+- Fase 2 (Plan Reader): pendiente tareas P1-01, P1-02
+- URL producción: [agregar tras deploy en Vercel]
+- Supabase Project Ref: ryxecsfgibymigirylsc
 
 ## Estructura clave
 src/app/(auth)/       — login, auth routes
