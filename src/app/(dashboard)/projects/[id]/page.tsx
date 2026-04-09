@@ -11,7 +11,8 @@ const TABS = [
   { href: '/bom', label: 'BOM/RFQ' },
 ]
 
-export default async function ProjectPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProjectPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams?: Promise<Record<string, string>> }) {
+  void searchParams
   const { id } = await params
   const supabase = await createClient()
 
@@ -74,15 +75,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
         {/* Tabs */}
         <nav className="flex gap-1">
-          {TABS.map((tab) => (
-            <Link
-              key={tab.href}
-              href={`/projects/${id}${tab.href}`}
-              className="px-4 py-2 text-sm text-gray-400 hover:text-white border-b-2 border-transparent hover:border-gray-600 transition-colors"
-            >
-              {tab.label}
-            </Link>
-          ))}
+          {TABS.map((tab) => {
+            const isActive = tab.href === ''
+            return (
+              <Link
+                key={tab.href}
+                href={`/projects/${id}${tab.href}`}
+                className={`px-4 py-2 text-sm border-b-2 transition-colors ${isActive ? 'text-white border-blue-500' : 'text-gray-400 hover:text-white border-transparent hover:border-gray-600'}`}
+              >
+                {tab.label}
+              </Link>
+            )
+          })}
         </nav>
       </div>
 
