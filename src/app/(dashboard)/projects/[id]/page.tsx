@@ -9,6 +9,7 @@ const TABS = [
   { href: '/estimate', label: 'Estimate' },
   { href: '/pricing', label: 'Pricing' },
   { href: '/bom', label: 'BOM/RFQ' },
+  { href: '/plans', label: 'Planos' },
 ]
 
 export default async function ProjectPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams?: Promise<Record<string, string>> }) {
