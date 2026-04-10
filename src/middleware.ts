@@ -27,24 +27,21 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Debug: log cookies and user state in production
-  const allCookies = request.cookies.getAll()
-  const supabaseCookies = allCookies.filter(c => c.name.includes('supabase') || c.name.startsWith('sb-'))
-  console.log(`[middleware] ${request.nextUrl.pathname} | cookies: ${allCookies.length} total, ${supabaseCookies.length} supabase | names: ${supabaseCookies.map(c => c.name).join(', ')}`)
-
-  const { data: { user }, error } = await supabase.auth.getUser()
-  console.log(`[middleware] getUser → user: ${user?.email ?? 'null'} | error: ${error?.message ?? 'none'}`)
+  // Usar getSession() en middleware para routing — lee cookies localmente sin
+  // llamada de red. getUser() se usa en layouts/pages para verificación segura.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data: { session } } = await (supabase.auth as any).getSession()
 
   const isLoginPage = request.nextUrl.pathname.startsWith('/login')
   const isAuthRoute = request.nextUrl.pathname.startsWith('/auth')
 
-  if (!user && !isLoginPage && !isAuthRoute) {
+  if (!session && !isLoginPage && !isAuthRoute) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  if (user && isLoginPage) {
+  if (session && isLoginPage) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)
