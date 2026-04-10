@@ -27,8 +27,13 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // CRÍTICO: getUser() refresca el token automáticamente
-  const { data: { user } } = await supabase.auth.getUser()
+  // Debug: log cookies and user state in production
+  const allCookies = request.cookies.getAll()
+  const supabaseCookies = allCookies.filter(c => c.name.includes('supabase') || c.name.startsWith('sb-'))
+  console.log(`[middleware] ${request.nextUrl.pathname} | cookies: ${allCookies.length} total, ${supabaseCookies.length} supabase | names: ${supabaseCookies.map(c => c.name).join(', ')}`)
+
+  const { data: { user }, error } = await supabase.auth.getUser()
+  console.log(`[middleware] getUser → user: ${user?.email ?? 'null'} | error: ${error?.message ?? 'none'}`)
 
   const isLoginPage = request.nextUrl.pathname.startsWith('/login')
   const isAuthRoute = request.nextUrl.pathname.startsWith('/auth')
@@ -45,7 +50,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // CRÍTICO: retornar supabaseResponse, NO NextResponse.next()
   return supabaseResponse
 }
 
